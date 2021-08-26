@@ -43,7 +43,15 @@ public class CommandLineApplication {
         ElectionService electionService= ElectionServiceImpl.getInstance();
         int kingdomsWon=0;
         String fileName=args[0];
-        Scanner scanner=loadFile(fileName);
+//        Scanner scanner=loadFile(fileName);
+        File file=new File(fileName);
+        Scanner scanner= null;
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");;
+            e.printStackTrace();
+        }
         while (scanner!=null && scanner.hasNext()){
             String message=scanner.nextLine();
             String [] command=message.split(" ");
