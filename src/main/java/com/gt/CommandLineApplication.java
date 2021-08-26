@@ -8,8 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class CommandLineApplication {
     /**
@@ -45,6 +44,7 @@ public class CommandLineApplication {
         String fileName=args[0];
 //        Scanner scanner=loadFile(fileName);
         File file=new File(fileName);
+
         Scanner scanner= null;
         try {
             scanner = new Scanner(file);
@@ -62,8 +62,12 @@ public class CommandLineApplication {
 
         }
         List<Kingdom> wonKingdoms=electionService.getWonKingdoms();
-        if(wonKingdoms.size()>1){
-            wonKingdoms.forEach(kingdom -> {
+        Set<Kingdom> uniqueWonKingdoms = new LinkedHashSet<>();
+        for (Kingdom it : wonKingdoms)
+            uniqueWonKingdoms.add(it);
+
+        if(uniqueWonKingdoms.size()>1){
+            uniqueWonKingdoms.forEach(kingdom -> {
                 System.out.print(kingdom.getName());
                 System.out.print(" ");
             });
