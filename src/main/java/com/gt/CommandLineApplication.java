@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CommandLineApplication {
+    /**
+     * Load the file from resources folder provided the filename
+     * @param fileName
+     * @return Scanner
+     */
     private static Scanner loadFile(String fileName){
         File file=null;
         Scanner sc = null;

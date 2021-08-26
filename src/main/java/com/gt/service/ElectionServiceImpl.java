@@ -10,20 +10,35 @@ public class ElectionServiceImpl implements ElectionService {
     Map<String, Kingdom> kingdoms = new HashMap<>();
     List<Kingdom> wonKingdoms = new ArrayList<>();
 
+    /**
+     * Default constructor for the singleton class ElectionServiceImpl
+     */
     private ElectionServiceImpl() {
         createKingdoms();
         wonKingdoms.add(kingdoms.get(Constants.SPACE_NAME));
     }
 
+    /**
+     * Getter to get the kingdoms
+     * @return Map<String, Kingdom>
+     */
     public Map<String, Kingdom> getKingdoms() {
         return kingdoms;
     }
 
+    /**
+     * Getter to get the list of won kingdoms
+     * @return List<Kingdom>
+     */
     public List<Kingdom> getWonKingdoms() {
         return wonKingdoms;
     }
 
 
+    /**
+     * Static method to get the instance of ElectionServiceImpl class
+     * @return ElectionServiceImpl
+     */
     public static ElectionServiceImpl getInstance() {
         if (instance == null) {
             instance = new ElectionServiceImpl();
@@ -31,11 +46,17 @@ public class ElectionServiceImpl implements ElectionService {
         return instance;
     }
 
+    /**
+     * Clears the list of won kingdoms
+     */
     public void resetElections() {
         this.wonKingdoms.clear();
         wonKingdoms.add(kingdoms.get(Constants.SPACE_NAME));
     }
 
+    /**
+     * Initializes the election service with the kingdoms created
+     */
     private void createKingdoms() {
         Kingdom space = Space.getInstance();
         Kingdom air = Air.getInstance();
@@ -52,6 +73,11 @@ public class ElectionServiceImpl implements ElectionService {
         this.kingdoms.put(Constants.ICE_NAME, ice);
     }
 
+    /**
+     * Message command to win kingdoms based on the decode of message and relevant conditions
+     * @param args Single command with Kingdom to send the message and the message itself
+     * @return true if the kingdom is won false otherwise
+     */
     @Override
     public boolean messageKingdom(String[] args) {
 //        resetElections();
