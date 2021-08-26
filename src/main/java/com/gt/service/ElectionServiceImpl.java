@@ -84,7 +84,11 @@ public class ElectionServiceImpl implements ElectionService {
         if(args.length<2){
             return false;
         }
+
         String kingdomName=args[0].toUpperCase(Locale.ROOT);
+        if(wonKingdoms.contains(kingdoms.get(kingdomName))){
+            return  false;
+        }
         String message="";
         for (int i=1;i<args.length;i++){
             message+=args[i];

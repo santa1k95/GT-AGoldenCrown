@@ -42,6 +42,7 @@ public class CommandLineApplication {
         ElectionService electionService= ElectionServiceImpl.getInstance();
         int kingdomsWon=0;
         String fileName=args[0];
+        Map<String,Boolean> msgSentTo=new HashMap<>();
 //        Scanner scanner=loadFile(fileName);
         File file=new File(fileName);
 
@@ -53,8 +54,16 @@ public class CommandLineApplication {
             e.printStackTrace();
         }
         while (scanner!=null && scanner.hasNext()){
+
             String message=scanner.nextLine();
             String [] command=message.split(" ");
+            if(msgSentTo.getOrDefault((command[0]),false)){
+                electionService.getWonKingdoms().clear();
+                break;
+            }
+            else {
+                msgSentTo.put(command[0],true);
+            }
             boolean result=electionService.messageKingdom(command);
             if(result){
                 kingdomsWon++;
