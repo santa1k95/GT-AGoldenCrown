@@ -1,5 +1,9 @@
 package com.gt.domains;
 
+/**
+ * SOLID principle
+ */
+
 import com.gt.helpers.Constants;
 
 public class Land implements Kingdom {

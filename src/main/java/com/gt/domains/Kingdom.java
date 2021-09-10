@@ -1,5 +1,9 @@
 package com.gt.domains;
 
+/**
+ * IKingdom
+ */
+
 import java.util.*;
 
 public interface Kingdom {

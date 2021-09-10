@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class CommandLineApplication {
     /**
@@ -57,30 +58,45 @@ public class CommandLineApplication {
 
             String message=scanner.nextLine();
             String [] command=message.split(" ");
-            if(msgSentTo.getOrDefault((command[0]),false)){
-                electionService.getWonKingdoms().clear();
-                break;
-            }
-            else {
-                msgSentTo.put(command[0],true);
-            }
             boolean result=electionService.messageKingdom(command);
             if(result){
                 kingdomsWon++;
             }
 
         }
-        List<Kingdom> wonKingdoms=electionService.getWonKingdoms();
-        Set<Kingdom> uniqueWonKingdoms = new LinkedHashSet<>();
-        for (Kingdom it : wonKingdoms)
-            uniqueWonKingdoms.add(it);
+        Map<String,List<Kingdom>> mapNameKingdomsWon=electionService.getMapNameKingdomsWon();
+        Map<String,Integer> mapNameTotalWins=new HashMap<>();
+        mapNameKingdomsWon.forEach((key,wonKingdom)->{
+            mapNameTotalWins.put(key,wonKingdom.size());
+        });
 
-        if(uniqueWonKingdoms.size()>1){
-            uniqueWonKingdoms.forEach(kingdom -> {
-                System.out.print(kingdom.getName());
-                System.out.print(" ");
-            });
-            System.out.println();
-        }else System.out.println("NONE");
+        mapNameTotalWins.forEach((key,value)->{
+            System.out.println(key+" "+value);
+        });
+
+        final Integer[] max = {0};
+        final String[] winnerKingdom = new String[1];
+        for(int i=0;i<mapNameTotalWins.size();i++){
+
+        }
+        mapNameTotalWins.forEach((key,totalWin)->{
+            if(totalWin > max[0]){
+                max[0] =totalWin;
+                winnerKingdom[0] =key;
+            }
+        });
+        System.out.println(winnerKingdom[0]);
+
+//        Set<Kingdom> uniqueWonKingdoms = new LinkedHashSet<>();
+//        for (Kingdom it : wonKingdoms)
+//            uniqueWonKingdoms.add(it);
+//
+//        if(uniqueWonKingdoms.size()>1){
+//            uniqueWonKingdoms.forEach(kingdom -> {
+//                System.out.print(kingdom.getName());
+//                System.out.print(" ");
+//            });
+//            System.out.println();
+//        }else System.out.println("NONE");
     }
 }
